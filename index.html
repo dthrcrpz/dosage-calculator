@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Primary Tags -->
+    <title>Dosage Calculator</title>
+    <meta name="title" content="Dosage Calculator">
+    <meta name="description" content="A simple dosage calculator">
+
+    <!-- OG / Facebook -->
+    <meta property="og:title" content="Dosage Calculator">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://dthrcrpz.dev/images/dthrcrpz-mask.png">
+    <meta property="og:url" content="https://dosage-calculator.dthrcrpz.dev/">
+    <meta property="og:description" content="A simple dosage calculator">
+    <meta property="og:site_name" content="Dosage Calculator">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="628">
+    <meta property="og:image:alt" content="dthrcrpz">
+    <meta property="og:image:url" content="https://dthrcrpz.dev/images/dthrcrpz-mask.png">
+    <meta property="og:image:secure_url" content="https://dthrcrpz.dev/images/dthrcrpz-mask.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://dosage-calculator.dthrcrpz.dev/">
+    <meta property="twitter:title" content="Dosage Calculator">
+    <meta property="twitter:description" content="A simple dosage calculator">
+    <meta property="twitter:image" content="https://dthrcrpz.dev/images/dthrcrpz-mask.png">
+
+    <!-- Extras -->
+    <meta name="keywords" content="dosage, dosage calculator, dosage calc, pet dosage calculator, pets, pet dosage">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="canonical" href="https://dosage-calculator.dthrcrpz.dev/">
+
+    <!-- Favicon and fonts -->
+    <link rel="icon" href="/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital@0;1&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/normalize.css">
+    <link rel="stylesheet" href="/app.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Dosage Calculator</h1>
+
+        <form class="dosage-form" name="dosageForm" onsubmit="dosageCalc(event)">
+            <div class="form-group">
+                <label for="dosage">Dosage</label>
+                <div class="group">
+                    <input type="text" id="dosage">
+                    <select name="dosageuom">
+                        <option value="1">mg/kg</option>
+                        <option value="2.2">mg/lb</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="concentration">Concentration</label>
+                <div class="group">
+                    <input type="text" name="strength" id="concentration">
+                    <select name="soluom">
+                        <option value="1">mg/ml</option>
+                        <option value="10">percent</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="weight">Weight of patient</label>
+                <div class="group">
+                    <input type="text" name="Weight" id="weight">
+                    <select name="weightuom">
+                        <option value="1">grams</option>
+                        <option value="28.375">ounces</option>
+                        <option value="454">pounds</option>
+                        <option value="1000">kg</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="answer">
+                <i>Answer</i>: one dose = <span class="result">11</span> cc
+            </div>
+
+            <button type="submit">Calculate</button>
+        </form>
+    </div>
+
+    <script>
+        function RoundFiner(aNumber, numDigits) {
+            const p = Math.pow(10, numDigits);
+            const x = aNumber * p;
+            const y = Math.round(x);
+            const answer = y / p;
+            return answer; // Add a return statement
+        }
+
+        function dosageCalc(e) {
+            e.preventDefault()
+            let weight = parseFloat(document.dosageForm.Weight.value); // Parse as float
+            let dosage = parseFloat(document.dosageForm.dosage.value); // Parse as float
+            let strength = parseFloat(document.dosageForm.strength.value); // Parse as float
+
+            if (isNaN(weight) || isNaN(dosage) || isNaN(strength)) {
+                alert("Please enter valid numbers for weight, dosage, and concentration.");
+                return; // Stop execution if inputs are invalid
+            }
+
+            const weightUom = parseInt(document.dosageForm.weightuom.value); // Parse as int
+            const soluom = parseInt(document.dosageForm.soluom.value); // Parse as int
+            const dosageUom = parseInt(document.dosageForm.dosageuom.value); // Parse as int
+
+            if (weightUom === 1000) {
+                weight *= 1000;
+            } else if (weightUom === 454) {
+                weight *= 454;
+            } else if (weightUom === 28.375) {
+                weight *= 28.375;
+            }
+
+            if (soluom === 10) {
+                strength *= 10;
+            }
+
+            if (dosageUom === 2.2) {
+                dosage *= 2.2;
+            }
+
+            const weight_ratio = weight / 1000;
+            const partofml = dosage / strength;
+            let answer = weight_ratio * partofml;
+            answer = RoundFiner(answer, 2); // Assign the returned value
+
+            if (weight === 0) {
+                alert("Please enter the weight before clicking Calculate.");
+            } else if (dosage === 0) {
+                alert("Please enter the dosage before clicking Calculate.");
+            } else if (strength === 0) {
+                alert("Please enter the strength before clicking Calculate.");
+            } else {
+                document.querySelector('.answer').classList.add('show')
+                document.querySelector('.result').innerHTML = answer
+            }
+        }
+    </script>
+</body>
+</html>

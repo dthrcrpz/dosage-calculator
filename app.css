@@ -1,0 +1,67 @@
+.roboto {
+  font-family: "Roboto", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+}
+
+body {
+  font-family: Roboto;
+}
+
+.container {
+  max-width: 768px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.dosage-form .form-group {
+  margin-bottom: 20px;
+}
+.dosage-form .form-group label {
+  display: block;
+  margin-bottom: 5px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+.dosage-form .form-group .group {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: 100%;
+}
+.dosage-form .form-group .group input {
+  padding: 10px;
+  width: 100%;
+  border: 1px solid #000;
+  border-right: none;
+}
+.dosage-form .form-group .group select {
+  width: 130px;
+  border: 1px solid #000;
+  padding: 10px;
+  flex-shrink: 0;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+.dosage-form .answer {
+  margin-bottom: 20px;
+  display: none;
+}
+.dosage-form .answer.show {
+  display: block;
+}
+.dosage-form .answer .result {
+  font-weight: 600;
+}
+.dosage-form button {
+  padding: 10px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}/*# sourceMappingURL=app.css.map */
